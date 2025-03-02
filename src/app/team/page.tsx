@@ -1,5 +1,7 @@
 "use client";
 
+import Footer from "../components/Footer";
+
 const teamMembers = [
   {
     name: "John Doe",
@@ -26,9 +28,10 @@ const teamMembers = [
 
 export default function TeamSection() {
   return (
+    <>
     <section className="py-12 px-4 md:px-16 bg-white">
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold">Meet Our Team</h2>
+        <h2 className="text-3xl md:text-4xl font-bold" style={{color:"black"}}>Meet Our Team</h2>
         <p className="text-gray-500 mt-2">
           Dedicated professionals working together to serve you better
         </p>
@@ -70,5 +73,7 @@ export default function TeamSection() {
         ))}
       </div>
     </section>
+    <Footer/>
+    </>
   );
 }

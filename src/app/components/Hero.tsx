@@ -26,7 +26,7 @@ const Hero = () => {
         style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
       >
         <Image
-          src="/shivalik new logo.jpg" // Ensure this path is correct
+          src="/shivalik-new-logo.jpg" // Ensure this path is correct
           alt="Shivalik Logo"
           width={100} // Logo width
           height={100} // Logo height
@@ -40,10 +40,10 @@ const Hero = () => {
         style={{ top: "60%" }} // Adjust this value to position the text below the logo
       >
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold drop-shadow-lg">
-          Student Affairs
+        
         </h1>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-lg mt-2">
-          Council
+        Jai Shiva 
         </h2>
         <p className="text-2xl sm:text-3xl md:text-4xl font-medium drop-shadow-lg mt-2">
           IIT Delhi

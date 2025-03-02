@@ -13,13 +13,13 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Team', path: '/team' },
     { name: 'Achievements', path: '/achievements' },
-    { name: 'Complaints', path: '/complaints' },
-    { name: 'CR Booking', path: '/cr-booking' },
-    { name: 'Library', path: '/library' },
-    { name: 'Mess Menu', path: '/mess-menu' },
+    { name: 'Complaints', path: '/messMaintComplain' },
+    { name: 'CR Booking', path: '/classRoomBook' },
+    { name: 'Library', path: '/libBooking' },
+    { name: 'Mess Menu', path: '/messmenu' },
   ];
 
   return (
