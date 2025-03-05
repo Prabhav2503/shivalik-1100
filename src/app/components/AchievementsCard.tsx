@@ -1,40 +1,24 @@
-'use client';
+import React from 'react';
 
-import Image from 'next/image';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-
-interface AchievementsCardProps {
-  imageUrl: string | StaticImport;
-  title: string;
-  description: string;
-}
-
-const AchievementsCard = ({ imageUrl, title, description }: AchievementsCardProps) => {
+const AchievementCard = ({ icon, title, description, gradientColors }) => {
   return (
-    <div className="bg-gray-900 rounded-lg overflow-hidden shadow-lg max-w-sm">
-      <div className="relative h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-        {typeof imageUrl === 'string' ? (
-          <img 
-            src={imageUrl} 
-            alt={title} 
-            className="w-16 h-16"
-          />
-        ) : (
-          <Image 
-            src={imageUrl} 
-            alt={title} 
-            width={64} 
-            height={64} 
-            className="w-16 h-16"
-          />
-        )}
+    <div className="flex flex-col h-full rounded-xl overflow-hidden bg-gray-900 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
+      <div
+        className="p-12 sm:p-16 md:p-20 flex items-center justify-center"
+        style={{
+          background: `linear-gradient(to right, ${gradientColors[0]}, ${gradientColors[1]})`
+        }}
+      >
+        <div className="text-white w-12 h-12 sm:w-16 sm:h-16">
+          {icon}
+        </div>
       </div>
-      <div className="p-6">
-        <h3 className="text-white text-2xl font-bold mb-2">{title}</h3>
-        <p className="text-gray-400">{description}</p>
+      <div className="p-6 flex-grow">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 text-sm sm:text-base">{description}</p>
       </div>
     </div>
   );
 };
 
-export default AchievementsCard;
+export default AchievementCard;
