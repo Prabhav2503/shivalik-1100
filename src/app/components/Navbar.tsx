@@ -17,7 +17,7 @@ const Navbar = () => {
     { name: 'Team', path: '/team' },
     { name: 'Achievements', path: '/achievements' },
     { name: 'Complaints', path: '/messMaintComplain' },
-    { name: 'CR Booking', path: '/classRoomBook' },
+    { name: 'CR Booking', path: '/commonroomBooking' },
     { name: 'Library', path: '/libBooking' },
     { name: 'Mess Menu', path: '/messmenu' },
   ];
