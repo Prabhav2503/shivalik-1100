@@ -1,15 +1,45 @@
 "use client";
-import { useState, FormEvent } from "react";
+
+import { useState, FormEvent, ChangeEvent } from "react";
 import axios from "axios";
 import Head from "next/head";
 import Footer from "../components/Footer";
+import Image from "next/image";
 
 export default function ComplaintForm() {
   const [complaintType, setComplaintType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Handle image file selection
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImageFile(file);
+
+    // Create a preview URL for the selected image
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
+  };
+
+  // Remove selected image
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    // Reset the file input
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,16 +47,42 @@ export default function ComplaintForm() {
     setMessage("");
 
     try {
-      const response = await axios.post("/api/complain", {
-        complainType: complaintType,
-        title,
-        description,
-      });
+      // If there's an image, use FormData to send the request
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("complainType", complaintType);
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("image", imageFile);
 
-      setMessage("Complaint submitted successfully!");
+        const response = await axios.post("/api/complain", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        setMessage("Complaint submitted successfully!");
+      } else {
+        // Without image, use JSON as before
+        const response = await axios.post("/api/complain", {
+          complainType: complaintType,
+          title,
+          description,
+        });
+
+        setMessage("Complaint submitted successfully!");
+      }
+
+      // Reset form
       setComplaintType("");
       setTitle("");
       setDescription("");
+      setImageFile(null);
+      setImagePreview(null);
+      
+      // Reset the file input
+      const fileInput = document.getElementById('image') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
     } catch (error) {
       console.error("Error submitting complaint:", error);
       setMessage("Error submitting complaint.");
@@ -37,42 +93,110 @@ export default function ComplaintForm() {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4 sm:px-6 py-8 sm:py-10">
+      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8 bg-gray-900">
         <Head>
           <title>Submit a Complaint</title>
         </Head>
 
-        <div className="w-full max-w-3xl p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-center mb-4">Submit a Complaint</h1>
+        <div className="w-full max-w-lg">
+          <h1 className="text-2xl font-bold text-center text-white mb-4">Submit a Complaint</h1>
+          <p className="text-center text-gray-400 mb-6 text-sm">Report issues for quick resolution</p>
 
-          {message && <p className="text-center text-green-600">{message}</p>}
+          {message && <p className="text-center text-green-500 mb-4">{message}</p>}
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
             <div className="mb-4">
-              <label className="block font-medium mb-2">Complaint Type</label>
+              <label className="block text-white text-sm mb-2">Complaint Type</label>
               <div className="flex space-x-4">
-                <label className="flex items-center">
-                  <input type="radio" name="complaintType" value="Mess" onChange={() => setComplaintType("Mess")} />
-                  <span className="ml-2">Mess</span>
+                <label className="flex items-center cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="complaintType" 
+                    value="Mess" 
+                    checked={complaintType === "Mess"}
+                    onChange={() => setComplaintType("Mess")} 
+                    className="mr-2" 
+                  />
+                  <span className="text-white">Mess</span>
                 </label>
-                <label className="flex items-center">
-                  <input type="radio" name="complaintType" value="Maintanence" onChange={() => setComplaintType("Maintanence")} />
-                  <span className="ml-2">Maintanence</span>
+                <label className="flex items-center cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="complaintType" 
+                    value="Maintanence" 
+                    checked={complaintType === "Maintanence"}
+                    onChange={() => setComplaintType("Maintanence")} 
+                    className="mr-2"
+                  />
+                  <span className="text-white">Maintanence</span>
                 </label>
               </div>
             </div>
 
             <div className="mb-4">
-              <label htmlFor="title" className="block font-medium mb-2">Title</label>
-              <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full border rounded p-2" required />
+              <label htmlFor="title" className="block text-white text-sm mb-2">Title</label>
+              <input 
+                type="text" 
+                id="title" 
+                value={title} 
+                onChange={(e) => setTitle(e.target.value)} 
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0" 
+                required 
+              />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="description" className="block font-medium mb-2">Description</label>
-              <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full border rounded p-2 h-24" required></textarea>
+              <label htmlFor="description" className="block text-white text-sm mb-2">Description</label>
+              <textarea 
+                id="description" 
+                value={description} 
+                onChange={(e) => setDescription(e.target.value)} 
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0 h-24" 
+                required
+              ></textarea>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded" disabled={loading}>
+            {/* Image upload section */}
+            <div className="mb-4">
+              <label htmlFor="image" className="block text-white text-sm mb-2">
+                Add Image (Optional)
+              </label>
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+              />
+              
+              {/* Image preview */}
+              {imagePreview && (
+                <div className="mt-3 relative">
+                  <div className="relative h-64 w-full bg-gray-700 rounded overflow-hidden">
+                    <Image
+                      src={imagePreview}
+                      alt="Preview"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center"
+                    aria-label="Remove image"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500" 
+              disabled={loading}
+            >
               {loading ? "Submitting..." : "Submit Complaint"}
             </button>
           </form>

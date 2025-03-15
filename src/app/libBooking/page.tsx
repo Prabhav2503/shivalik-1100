@@ -40,18 +40,18 @@ export default function LibraryBooking() {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen w-full px-4 py-8 sm:py-12" style={{ backgroundColor: "rgb(23, 23, 23)" }}>
+      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8 bg-gray-900">
         <Head>
           <title>Library Booking</title>
         </Head>
 
-        <div className="w-full max-w-lg md:max-w-2xl">
-          <h1 className="text-2xl font-bold text-center text-white mb-2">Library Booking</h1>
+        <div className="w-full max-w-lg">
+          <h1 className="text-2xl font-bold text-center text-white mb-4">Library Booking</h1>
           <p className="text-center text-gray-400 mb-6 text-sm">Reserve your study space and books</p>
 
-          {message && <p className="text-center text-green-500">{message}</p>}
+          {message && <p className="text-center text-green-500 mb-4">{message}</p>}
 
-          <form onSubmit={handleSubmit} className="bg-gray-900 rounded-lg p-6">
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
             <div className="mb-4">
               <label htmlFor="date" className="block text-white text-sm mb-2">Select Date</label>
               <input
@@ -59,7 +59,8 @@ export default function LibraryBooking() {
                 id="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-800 text-white text-sm border-0 focus:ring-2 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                required
               />
             </div>
 
@@ -69,7 +70,8 @@ export default function LibraryBooking() {
                 id="duration"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-800 text-white text-sm border-0 focus:ring-2 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                required
               >
                 <option value="" disabled>Select duration</option>
                 {durationOptions.map((option) => (
@@ -86,7 +88,8 @@ export default function LibraryBooking() {
                 id="book"
                 value={book}
                 onChange={(e) => setBook(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-800 text-white text-sm border-0 focus:ring-2 focus:ring-purple-500"
+                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                required
               >
                 <option value="" disabled>Select a book</option>
                 {bookOptions.map((option) => (
@@ -97,15 +100,13 @@ export default function LibraryBooking() {
               </select>
             </div>
 
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="px-6 py-2 bg-purple-600 text-white text-sm font-medium rounded hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 transition"
-                disabled={loading}
-              >
-                {loading ? "Booking..." : "Book Slot"}
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500"
+              disabled={loading}
+            >
+              {loading ? "Booking..." : "Book Library Slot"}
+            </button>
           </form>
         </div>
       </div>

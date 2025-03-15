@@ -4,7 +4,7 @@ interface Complains extends Document {
   complainType: string;
   title: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string; // Optional field for image URL
 }
 
 const complainsSchema: Schema = new Schema(
@@ -22,7 +22,10 @@ const complainsSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-   
+    imageUrl: {
+      type: String,
+      required: false, // Optional field
+    },
   },
   { timestamps: true }
 );
