@@ -44,7 +44,7 @@ const AdminDashboard = () => {
       <div className="mt-6 space-y-4">
         <a href="/admin/complaints" className="block bg-red-500 px-4 py-2 rounded">Manage Complaints</a>
         <a href="/admin/bookings" className="block bg-blue-500 px-4 py-2 rounded">View Bookings</a>
-        <a href="/admin/mess" className="block bg-green-500 px-4 py-2 rounded">Edit Mess Menu</a>
+        <a href="/admin/messmenu" className="block bg-green-500 px-4 py-2 rounded">Edit Mess Menu</a>
       </div>
 
       <button

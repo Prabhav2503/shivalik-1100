@@ -29,5 +29,6 @@ const MessMenuSchema = new Schema<IMessMenu>({
     },
   ],
 });
-
-export default mongoose.model<IMessMenu>("MessMenu", MessMenuSchema);
+// Use this pattern:
+const MessMenu = mongoose.models.MessMenu || mongoose.model<IMessMenu>("MessMenu", MessMenuSchema);
+export default MessMenu;
