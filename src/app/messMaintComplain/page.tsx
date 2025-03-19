@@ -3,7 +3,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import axios from "axios";
 import Head from "next/head";
-import Footer from "../components/Footer";
+import Footer from "../components/MyFooter";
 import Image from "next/image";
 
 export default function ComplaintForm() {

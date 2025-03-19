@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AchievementCard from '../components/AchievementsCard';
-import Footer from '../components/Footer';
+import Footer from '../components/MyFooter';
 
 interface Achievement {
   _id: string;

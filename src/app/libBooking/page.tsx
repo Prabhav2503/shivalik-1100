@@ -2,7 +2,7 @@
 import { useState, FormEvent } from "react";
 import axios from "axios";
 import Head from "next/head";
-import Footer from "../components/Footer";
+import Footer from "../components/MyFooter";
 
 export default function LibraryBooking() {
   const [date, setDate] = useState("");

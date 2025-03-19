@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Footer from "../components/Footer";
+import Footer from "../components/MyFooter";
 import axios from "axios";
 
 interface TeamMember {

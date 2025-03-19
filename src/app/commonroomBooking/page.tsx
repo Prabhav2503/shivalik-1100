@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, FormEvent } from "react";
 import axios from "axios";
-import Footer from "../components/Footer";
+import Footer from "../components/MyFooter";
 
 interface Booking {
   date: string;
