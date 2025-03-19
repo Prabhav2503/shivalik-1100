@@ -93,20 +93,20 @@ export default function ComplaintForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8 bg-gray-900">
+      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8" style={{backgroundColor:"rgb(23,23,23)"}}>
         <Head>
           <title>Submit a Complaint</title>
         </Head>
 
         <div className="w-full max-w-lg">
-          <h1 className="text-2xl font-bold text-center text-white mb-4">Submit a Complaint</h1>
-          <p className="text-center text-gray-400 mb-6 text-sm">Report issues for quick resolution</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">Submit a Complaint</h1>
+          <p className="text-center text-gray-400 mb-8 text-base md:text-lg">Report issues for quick resolution</p>
 
-          {message && <p className="text-center text-green-500 mb-4">{message}</p>}
+          {message && <p className="text-center text-green-500 mb-4 text-base md:text-lg">{message}</p>}
 
-          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
+          <form onSubmit={handleSubmit} className="p-6 rounded-lg" style={{backgroundColor:"rgb(38,38,38)"}}>
             <div className="mb-4">
-              <label className="block text-white text-sm mb-2">Complaint Type</label>
+              <label className="block text-white text-base md:text-lg mb-3">Complaint Type</label>
               <div className="flex space-x-4">
                 <label className="flex items-center cursor-pointer">
                   <input 
@@ -115,9 +115,9 @@ export default function ComplaintForm() {
                     value="Mess" 
                     checked={complaintType === "Mess"}
                     onChange={() => setComplaintType("Mess")} 
-                    className="mr-2" 
+                    className="mr-2 w-5 h-5" 
                   />
-                  <span className="text-white">Mess</span>
+                  <span className="text-white text-base md:text-lg">Mess</span>
                 </label>
                 <label className="flex items-center cursor-pointer">
                   <input 
@@ -126,39 +126,41 @@ export default function ComplaintForm() {
                     value="Maintanence" 
                     checked={complaintType === "Maintanence"}
                     onChange={() => setComplaintType("Maintanence")} 
-                    className="mr-2"
+                    className="mr-2 w-5 h-5"
                   />
-                  <span className="text-white">Maintanence</span>
+                  <span className="text-white text-base md:text-lg">Maintanence</span>
                 </label>
               </div>
             </div>
 
             <div className="mb-4">
-              <label htmlFor="title" className="block text-white text-sm mb-2">Title</label>
+              <label htmlFor="title" className="block text-white text-base md:text-lg mb-3">Title</label>
               <input 
                 type="text" 
                 id="title" 
                 value={title} 
                 onChange={(e) => setTitle(e.target.value)} 
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0" 
+                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg" 
+                style={{backgroundColor:"rgb(64,64,64)"}}
                 required 
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="description" className="block text-white text-sm mb-2">Description</label>
+              <label htmlFor="description" className="block text-white text-base md:text-lg mb-3">Description</label>
               <textarea 
                 id="description" 
                 value={description} 
                 onChange={(e) => setDescription(e.target.value)} 
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0 h-24" 
+                className="w-full px-3 py-3 rounded bg-gray-700 text-white border-0 h-24 text-base md:text-lg" 
+                style={{backgroundColor:"rgb(64,64,64)"}}
                 required
               ></textarea>
             </div>
 
             {/* Image upload section */}
             <div className="mb-4">
-              <label htmlFor="image" className="block text-white text-sm mb-2">
+              <label htmlFor="image" className="block text-white text-base md:text-lg mb-3">
                 Add Image (Optional)
               </label>
               <input
@@ -166,7 +168,8 @@ export default function ComplaintForm() {
                 id="image"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-3 rounded  text-white border-0 text-base md:text-lg"
+                style={{backgroundColor:"rgb(64,64,64)"}}
               />
               
               {/* Image preview */}
@@ -194,7 +197,7 @@ export default function ComplaintForm() {
 
             <button 
               type="submit" 
-              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500" 
+              className="w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500 text-base md:text-lg" 
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit Complaint"}

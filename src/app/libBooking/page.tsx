@@ -40,37 +40,39 @@ export default function LibraryBooking() {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8 bg-gray-900">
+      <div className="flex flex-col items-center  w-full px-4 py-8 sm:px-6 md:px-8" style={{backgroundColor:"rgb(23,23,23)"}}>
         <Head>
           <title>Library Booking</title>
         </Head>
 
         <div className="w-full max-w-lg">
-          <h1 className="text-2xl font-bold text-center text-white mb-4">Library Booking</h1>
-          <p className="text-center text-gray-400 mb-6 text-sm">Reserve your study space and books</p>
+          <h1 className="text-4xl font-bold text-center text-white mb-4">Library Booking</h1>
+          <p className="text-center text-gray-400 mb-6 text-base">Reserve your study space and books</p>
 
           {message && <p className="text-center text-green-500 mb-4">{message}</p>}
 
-          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
+          <form onSubmit={handleSubmit} className="p-6 rounded-lg" style={{backgroundColor:"rgb(38,38,38)"}}>
             <div className="mb-4">
-              <label htmlFor="date" className="block text-white text-sm mb-2">Select Date</label>
+              <label htmlFor="date" className="block text-white text-base mb-2">Select Date</label>
               <input
                 type="date"
                 id="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-2 rounded text-white border-0"
+                style={{backgroundColor:"rgb(64,64,64)"}}
                 required
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="duration" className="block text-white text-sm mb-2">Booking Duration (Days)</label>
+              <label htmlFor="duration" className="block text-white text-base mb-2">Booking Duration (Days)</label>
               <select
                 id="duration"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
                 className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                style={{backgroundColor:"rgb(64,64,64)"}}
                 required
               >
                 <option value="" disabled>Select duration</option>
@@ -83,12 +85,13 @@ export default function LibraryBooking() {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="book" className="block text-white text-sm mb-2">Select Book</label>
+              <label htmlFor="book" className="block text-white text-base mb-2">Select Book</label>
               <select
                 id="book"
                 value={book}
                 onChange={(e) => setBook(e.target.value)}
                 className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                style={{backgroundColor:"rgb(64,64,64)"}}
                 required
               >
                 <option value="" disabled>Select a book</option>
@@ -102,7 +105,7 @@ export default function LibraryBooking() {
 
             <button
               type="submit"
-              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500"
+              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500 text-lg"
               disabled={loading}
             >
               {loading ? "Booking..." : "Book Library Slot"}

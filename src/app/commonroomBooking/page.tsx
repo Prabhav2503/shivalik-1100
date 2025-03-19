@@ -86,26 +86,26 @@ const CommonroomBooking = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8 bg-gray-900">
+      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8" style={{backgroundColor:"rgb(23,23,23)"}}>
         <div className="w-full max-w-lg">
-          <h1 className="text-2xl font-bold text-center text-white mb-4">Commonroom Booking</h1>
-          <p className="text-center text-gray-400 mb-6 text-sm">Reserve the room for your session</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">Common Room Booking</h1>
+          <p className="text-center text-gray-400 mb-8 text-base md:text-lg">Reserve a classroom for your study sessions</p>
 
           {message && <p className="text-center text-red-500">{message}</p>}
 
-          <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
+          <form onSubmit={handleSubmit} className=" p-6 rounded-lg" style={{backgroundColor:"rgb(34,34,34)"}}>
             <div className="mb-4">
-              <label className="block text-white text-sm mb-2">Select Date</label>
+              <label className="block text-white text-base md:text-lg mb-3">Select Date</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-3 rounded  text-white border-0 text-base md:text-lg" style={{backgroundColor:"rgb(64,64,64)"}}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-white text-sm mb-2">Select Time Slots (Multiple Allowed)</label>
+              <label className="block text-white text-base md:text-lg mb-3">Select Time Slots (Multiple Allowed)</label>
               <div className="grid grid-cols-6 gap-2">
                 {allTimeSlots.map((slot) => {
                   const isBooked = bookedSlots.some((booking) => booking.timeSlots.includes(slot));
@@ -113,9 +113,10 @@ const CommonroomBooking = () => {
                   return (
                     <div
                       key={slot}
-                      className={`cursor-pointer p-2 text-center rounded min-h-[50px] ${
-                        isBooked ? "bg-red-600" : timeSlots.includes(slot) ? "bg-purple-600" : "bg-gray-700"
-                      }`}
+                      className={`cursor-pointer p-2 text-center rounded min-h-[50px]`}
+                      style={{
+                        backgroundColor: isBooked ? "#dc2626" : timeSlots.includes(slot) ? "#9333ea" : "rgb(64,64,64)"
+                      }}
                       onClick={() =>
                         isBooked
                           ? handleSlotClick(slot)
@@ -124,7 +125,7 @@ const CommonroomBooking = () => {
                             )
                       }
                     >
-                      <span className="text-xs font-medium">{slot}</span>
+                      <span className="text-xs md:text-sm font-medium">{slot}</span>
                     </div>
                   );
                 })}
@@ -132,41 +133,44 @@ const CommonroomBooking = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-white text-sm mb-2">Person of Contact Name</label>
+              <label className="block text-white text-base md:text-lg mb-3">Person of Contact Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg"
+                style={{backgroundColor:"rgb(64,64,64)"}}
               />
             </div>
 
             <div className="mb-4">
-              <label className="block text-white text-sm mb-2">Phone Number</label>
+              <label className="block text-white text-base md:text-lg mb-3">Phone Number</label>
               <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg"
+                style={{backgroundColor:"rgb(64,64,64)"}}
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-white text-sm mb-2">Purpose of Booking</label>
+              <label className="block text-white text-base md:text-lg mb-3">Purpose of Booking</label>
               <input
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-700 text-white border-0"
+                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg"
+                style={{backgroundColor:"rgb(64,64,64)"}}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-purple-600 text-white p-2 rounded disabled:bg-gray-500"
+              className="w-full bg-purple-600 text-white p-3 rounded text-base md:text-lg disabled:bg-gray-500"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Booking Commonroom..." : "Book Commonroom"}
+              {isSubmitting ? "Booking..." : "Book Classroom"}
             </button>
           </form>
         </div>

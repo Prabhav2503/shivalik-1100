@@ -49,9 +49,9 @@ export default function TeamSection() {
 
   return (
     <>
-      <section className="py-12 px-4 md:px-16 bg-white">
+      <section className="py-12 px-4 md:px-16" style={{backgroundColor:"rgb(23,23,23)"}}>
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold" style={{ color: "black" }}>Meet Our Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold" style={{ color: "white" }}>Meet Our Team</h2>
           <p className="text-gray-500 mt-2">
             Dedicated professionals working together to serve you better
           </p>
@@ -74,7 +74,7 @@ export default function TeamSection() {
               >
                 {/* Avatar with Image or Initials */}
                 {member.imageUrl ? (
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden">
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden" >
                     <Image
                       src={member.imageUrl}
                       alt={member.name}
@@ -89,7 +89,7 @@ export default function TeamSection() {
                 )}
                 
                 {/* Name & Role */}
-                <h3 className="text-xl font-semibold">{member.name}</h3>
+                <h3 className="text-xl font-semibold" style={{color:"black"}}>{member.name}</h3>
                 <p className="text-gray-500">{member.role}</p>
                 
                 {/* Contact Information (Clickable Email & Phone) */}
