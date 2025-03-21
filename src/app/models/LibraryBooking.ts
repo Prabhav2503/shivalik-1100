@@ -1,16 +1,39 @@
+// app/models/LibraryBooking.ts
 import mongoose, { Schema, Document } from "mongoose";
 
 interface ILibraryBooking extends Document {
-  date: Date; // Stores starting date from the calendar UI
+  date: Date;       // Stores starting date from the calendar UI
   duration: number; // in days
-  book: string; // Book title
-
+  book: string;     // Book title
+  status: string;   // pending, lended, returned
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const LibraryBookingSchema = new Schema<ILibraryBooking>({
-  date: { type: Date, required: true }, // Stores full date object (e.g., "2025-03-08T00:00:00Z")
-  duration: { type: Number, required: true }, // Number of days
-  book: { type: String, required: true }, // Book title as string
+  date: { 
+    type: Date, 
+    required: true 
+  },
+  duration: { 
+    type: Number, 
+    required: true 
+  },
+  book: { 
+    type: String, 
+    required: true 
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'lended', 'returned'],
+    default: 'pending'
+  }
+}, { 
+  timestamps: true // Adds createdAt and updatedAt fields
 });
 
-export default mongoose.model<ILibraryBooking>("LibraryBooking", LibraryBookingSchema);
+// Use mongoose.models to check if the model already exists to prevent overwriting
+const LibraryBooking = mongoose.models.LibraryBooking || 
+  mongoose.model<ILibraryBooking>("LibraryBooking", LibraryBookingSchema);
+
+export default LibraryBooking;
