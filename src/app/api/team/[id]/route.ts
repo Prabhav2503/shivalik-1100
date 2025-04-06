@@ -11,8 +11,8 @@ export async function GET(
 ) {
   try {
     await connectToDatabase();
-    
-    const teamMember = await TeamMember.findById(params.id);
+    const id = (await params).id;
+    const teamMember = await TeamMember.findById(id);
     
     if (!teamMember) {
       return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -50,9 +50,9 @@ export async function PUT(
       }
       
       await connectToDatabase();
-      
+      const id = (await params).id;
       // Find the existing team member
-      const teamMember = await TeamMember.findById(params.id);
+      const teamMember = await TeamMember.findById(id); 
       
       if (!teamMember) {
         return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -115,10 +115,10 @@ export async function PUT(
       const data = await req.json();
       
       await connectToDatabase();
-      
+      const id = (await params).id;
       // Find and update the team member
       const teamMember = await TeamMember.findByIdAndUpdate(
-        params.id,
+        id,
         { $set: data },
         { new: true, runValidators: true }
       );
@@ -142,9 +142,9 @@ export async function DELETE(
 ) {
   try {
     await connectToDatabase();
-    
+    const id = (await params).id;
     // Find the team member to get image URL
-    const teamMember = await TeamMember.findById(params.id);
+    const teamMember = await TeamMember.findById(id);
     
     if (!teamMember) {
       return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -174,7 +174,7 @@ export async function DELETE(
     }
     
     // Delete the team member
-    await TeamMember.findByIdAndDelete(params.id);
+    await TeamMember.findByIdAndDelete(id);
     
     return NextResponse.json({ message: "Team member deleted successfully" });
   } catch (error) {
