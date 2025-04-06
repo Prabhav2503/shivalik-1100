@@ -39,7 +39,7 @@ export default function AdminTeamPage() {
   const fetchTeamMembers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/team");
+      const response = await axios.get<TeamMember[]>("/api/team");
       setTeamMembers(response.data);
     } catch (err) {
       console.error("Error fetching team members:", err);

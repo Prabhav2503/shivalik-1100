@@ -18,7 +18,7 @@ const AdminDashboard = () => {
       }
 
       try {
-        const response = await axios.get("/api/auth/me", {
+        const response = await axios.get<{ username: string }>("/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

@@ -7,12 +7,11 @@ import cloudinary from "@/libs/cloudinary";
 // GET - Fetch a specific achievement
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
-    const id = (await params).id;
-    const achievement = await Achievement.findById(id);
+    const achievement = await Achievement.findById(params.id);
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
     }
@@ -26,11 +25,11 @@ export async function GET(
 // PUT - Update an achievement
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     const contentType = request.headers.get("content-type") || "";
-    const id = (await params).id;
+    const id = params.id;
 
     if (contentType.includes("multipart/form-data")) {
       const formData = await request.formData();
@@ -145,12 +144,11 @@ export async function PUT(
 // DELETE - Remove an achievement
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
-    const id = (await params).id;
-    const achievement = await Achievement.findById(id);
+    const achievement = await Achievement.findById(params.id);
 
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });

@@ -25,7 +25,7 @@ const AdminComplaints = () => {
 
   const fetchComplaints = async () => {
     try {
-      const response = await axios.get("/api/admin/complaints");
+      const response = await axios.get<Complaint[]>("/api/admin/complaints");
       setComplaints(response.data);
     } catch {
       setError("Failed to load complaints.");
@@ -40,7 +40,7 @@ const AdminComplaints = () => {
     try {
       // Delete the complaint and its image if it exists
       await axios.delete(`/api/admin/complaints/${id}`, {
-        data: { imageUrl } // Send imageUrl in request body
+        params: { imageUrl } // Send imageUrl as a query parameter instead of in the request body
       });
       
       setComplaints((prev) => prev.filter((complaint) => complaint._id !== id));

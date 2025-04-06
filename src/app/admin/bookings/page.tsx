@@ -41,7 +41,7 @@ export default function AdminBookingsPage() {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/admin/bookings");
+      const response = await axios.get<Booking[]>("/api/admin/bookings");
       setBookings(response.data);
     } catch (err) {
       console.error("Error fetching bookings:", err);

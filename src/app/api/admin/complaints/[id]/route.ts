@@ -6,14 +6,14 @@ import cloudinary from "@/libs/cloudinary";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
     
-    // Extract the image URL from the request body (if provided)
-    const body = await req.json().catch(() => ({}));
-    const { imageUrl } = body;
+    // Extract the image URL from the query parameters (if provided)
+    const url = new URL(req.url);
+    const imageUrl = url.searchParams.get('imageUrl') || undefined;
     
     // Delete the complaint from the database
     const deletedComplaint = await Complains.findByIdAndDelete(params.id);

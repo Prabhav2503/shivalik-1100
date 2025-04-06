@@ -1,35 +1,54 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is not defined in environment variables.");
 }
 
-// Use a global cache to prevent multiple connections in development mode
-declare global {
-  let s_mongooseConnection: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
+// Define the connection type
+interface MongooseConnection {
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Connection | null> | null;
 }
 
-// Initialize global cache if it doesn't exist
-global._mongooseConnection = global._mongooseConnection || { conn: null, promise: null };
+// Using a more specific type assertion for the global scope
+const globalWithMongoose: {
+  _mongooseConnection?: MongooseConnection;
+} = global as any;
 
-async function connectToDatabase() {
-  if (global._mongooseConnection.conn) {
-    return global._mongooseConnection.conn;
+// Initialize the connection cache to prevent multiple connections in development
+if (!globalWithMongoose._mongooseConnection) {
+  globalWithMongoose._mongooseConnection = { conn: null, promise: null };
+}
+
+/**
+ * Connect to MongoDB database
+ */
+async function connectToDatabase(): Promise<typeof mongoose> {
+  // If we have an existing connection, use it
+  if (globalWithMongoose._mongooseConnection?.conn) {
+    return mongoose;
   }
 
-  if (!global._mongooseConnection.promise) {
-    global._mongooseConnection.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
-      return mongoose;
-    });
+  // If there's no existing connection but a connection is in progress, wait for it
+  if (!globalWithMongoose._mongooseConnection?.promise) {
+    // Start a new connection
+    globalWithMongoose._mongooseConnection!.promise = mongoose.connect(MONGODB_URI!)
+      .then(() => mongoose.connection)
+      .catch((err) => {
+        console.error("MongoDB connection error:", err);
+        return null;
+      });
   }
 
-  global._mongooseConnection.conn = await global._mongooseConnection.promise;
-  return global._mongooseConnection.conn;
+  try {
+    globalWithMongoose._mongooseConnection!.conn = await globalWithMongoose._mongooseConnection!.promise;
+  } catch (e) {
+    console.error("Failed to establish MongoDB connection:", e);
+  }
+
+  return mongoose;
 }
 
 export default connectToDatabase;
