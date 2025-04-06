@@ -7,7 +7,7 @@ import cloudinary from "@/libs/cloudinary";
 // GET - Fetch a specific achievement
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ team: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
@@ -25,7 +25,7 @@ export async function GET(
 // PUT - Update an achievement
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     const contentType = request.headers.get("content-type") || "";
@@ -144,7 +144,7 @@ export async function PUT(
 // DELETE - Remove an achievement
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
