@@ -6,13 +6,13 @@ import cloudinary from "@/libs/cloudinary";
 
 // GET - Fetch a specific achievement
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
     
-    const achievement = await Achievement.findById(params.id);
+    const achievement = await Achievement.findById(context.params.id);
     
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
@@ -27,14 +27,14 @@ export async function GET(
 
 // PUT - Update an achievement
 export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
-    const contentType = req.headers.get("content-type") || "";
+    const contentType = request.headers.get("content-type") || "";
     
     if (contentType.includes("multipart/form-data")) {
-      const formData = await req.formData();
+      const formData = await request.formData();
       
       // Get form fields
       const title = formData.get("title") as string;
@@ -50,7 +50,7 @@ export async function PUT(
       await connectToDatabase();
       
       // Find the existing achievement
-      const achievement = await Achievement.findById(params.id);
+      const achievement = await Achievement.findById(context.params.id);
       
       if (!achievement) {
         return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
@@ -122,13 +122,13 @@ export async function PUT(
     } 
     else {
       // Handle JSON request
-      const data = await req.json();
+      const data = await request.json();
       
       await connectToDatabase();
       
       // Handle deleting images if specified
       if (data.deleteImages && Array.isArray(data.deleteImages)) {
-        const achievement = await Achievement.findById(params.id);
+        const achievement = await Achievement.findById(context.params.id);
         if (achievement) {
           for (const imageUrl of data.deleteImages) {
             // Remove from images array
@@ -166,7 +166,7 @@ export async function PUT(
       
       // Find and update the achievement
       const updatedAchievement = await Achievement.findByIdAndUpdate(
-        params.id,
+        context.params.id,
         { $set: updateData },
         { new: true, runValidators: true }
       );
@@ -185,14 +185,14 @@ export async function PUT(
 
 // DELETE - Remove an achievement
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
     
     // Find the achievement to get image URLs
-    const achievement = await Achievement.findById(params.id);
+    const achievement = await Achievement.findById(context.params.id);
     
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
@@ -224,7 +224,7 @@ export async function DELETE(
     }
     
     // Delete the achievement
-    await Achievement.findByIdAndDelete(params.id);
+    await Achievement.findByIdAndDelete(context.params.id);
     
     return NextResponse.json({ message: "Achievement deleted successfully" });
   } catch (error) {
