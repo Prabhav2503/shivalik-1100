@@ -27,6 +27,7 @@ const AchievementsPage = () => {
         // const response = await axios.get("/api/achievements");
         const response = await axios.get<Achievement[]>("/api/achievements");
         setAchievements(response.data);
+        console.log(response.data);
       } catch (err) {
         console.error("Error fetching achievements:", err);
         setError("Failed to load achievements.");
