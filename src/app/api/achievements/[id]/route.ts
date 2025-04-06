@@ -5,13 +5,13 @@ import Achievement from "@/app/models/Achievement";
 import cloudinary from "@/libs/cloudinary";
 
 // GET - Fetch a specific achievement
-export const GET = async (
+export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
-) => {
+  { params }: { params: Promise<{ team: string }> }
+) {
   try {
     await connectToDatabase();
-    const achievement = await Achievement.findById(context.params.id);
+    const achievement = await Achievement.findById(params.id);
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
     }
@@ -20,16 +20,16 @@ export const GET = async (
     console.error("Error fetching achievement:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
-};
+}
 
 // PUT - Update an achievement
-export const PUT = async (
+export async function PUT(
   request: NextRequest,
-  context: { params: { id: string } }
-) => {
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const contentType = request.headers.get("content-type") || "";
-    const id = context.params.id;
+    const id = params.id;
 
     if (contentType.includes("multipart/form-data")) {
       const formData = await request.formData();
@@ -139,16 +139,16 @@ export const PUT = async (
     console.error("Error updating achievement:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
-};
+}
 
 // DELETE - Remove an achievement
-export const DELETE = async (
+export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
-) => {
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectToDatabase();
-    const achievement = await Achievement.findById(context.params.id);
+    const achievement = await Achievement.findById(params.id);
 
     if (!achievement) {
       return NextResponse.json({ message: "Achievement not found" }, { status: 404 });
@@ -172,10 +172,10 @@ export const DELETE = async (
       }
     }
 
-    await Achievement.findByIdAndDelete(context.params.id);
+    await Achievement.findByIdAndDelete(params.id);
     return NextResponse.json({ message: "Achievement deleted successfully" });
   } catch (error) {
     console.error("Error deleting achievement:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
-};
+}
