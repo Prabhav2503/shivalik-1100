@@ -36,7 +36,7 @@ export default function AdminAchievementsPage() {
   const fetchAchievements = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/achievements");
+      const response = await axios.get<Achievement[]>("/api/achievements");
       setAchievements(response.data);
     } catch (err) {
       console.error("Error fetching achievements:", err);
