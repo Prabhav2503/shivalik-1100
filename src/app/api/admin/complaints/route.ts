@@ -1,5 +1,5 @@
 // app/api/admin/complaints/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import connectToDatabase from "@/libs/mongodb";
 import Complains from "@/app/models/complains";
 
