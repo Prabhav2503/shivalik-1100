@@ -22,7 +22,7 @@ export default function LibraryBooking() {
         duration: Number(duration), // Ensure duration is stored as a number
         book,
       });
-
+      console.log(response);
       setMessage("Library booking successful!");
       setDate("");
       setDuration("");

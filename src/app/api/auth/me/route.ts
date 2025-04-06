@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { username: string };
 
     return NextResponse.json({ username: decoded.username });
-  } catch (error) {
+  } catch{
     return NextResponse.json({ message: "Invalid token" }, { status: 401 });
   }
 }

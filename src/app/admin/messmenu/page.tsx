@@ -27,7 +27,7 @@ export default function AdminMessMenu() {
   const [editingMeal, setEditingMeal] = useState<string | null>(null);
   const [editItems, setEditItems] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     fetchMessMenu();

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 declare global {
   // Extend globalThis to include _mongooseConnection
-  var _mongooseConnection: {
+  let _mongooseConnection: {
     conn: typeof mongoose | null;
     promise: Promise<typeof mongoose> | null;
 };

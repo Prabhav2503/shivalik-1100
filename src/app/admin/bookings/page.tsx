@@ -110,25 +110,25 @@ export default function AdminBookingsPage() {
     return acc;
   }, {} as Record<string, Booking[]>);
 
-  // Get all time slots for a specific date
-  const getTimeSlotsByDate = (date: string) => {
-    const bookingsOnDate = bookingsByDate[date] || [];
-    const allSlots = new Set<string>();
+  // // Get all time slots for a specific date
+  // const getTimeSlotsByDate = (date: string) => {
+  //   const bookingsOnDate = bookingsByDate[date] || [];
+  //   const allSlots = new Set<string>();
     
-    bookingsOnDate.forEach(booking => {
-      booking.timeSlots.forEach(slot => {
-        allSlots.add(slot);
-      });
-    });
+  //   bookingsOnDate.forEach(booking => {
+  //     booking.timeSlots.forEach(slot => {
+  //       allSlots.add(slot);
+  //     });
+  //   });
     
-    return Array.from(allSlots).sort();
-  };
+  //   return Array.from(allSlots).sort();
+  // };
 
   // Get booking for a specific slot and date
-  const getBookingBySlot = (date: string, slot: string) => {
-    const bookingsOnDate = bookingsByDate[date] || [];
-    return bookingsOnDate.find(booking => booking.timeSlots.includes(slot));
-  };
+  // const getBookingBySlot = (date: string, slot: string) => {
+  //   const bookingsOnDate = bookingsByDate[date] || [];
+  //   return bookingsOnDate.find(booking => booking.timeSlots.includes(slot));
+  // };
 
   // Format time slots for display
   const formatTimeSlots = (slots: string[]) => {

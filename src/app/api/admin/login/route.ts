@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const token = jwt.sign({ username: admin.username }, process.env.JWT_SECRET!, { expiresIn: "1d" });
 
     return NextResponse.json({ message: "Login successful", token }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

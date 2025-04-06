@@ -20,7 +20,7 @@ const AdminLogin = () => {
         localStorage.setItem("token", response.data.token); // Store token
         router.push("/admin/dashboard"); // Redirect to admin panel
       }
-    } catch (error) {
+    } catch  {
       setError("Invalid username or password.");
     }
   };

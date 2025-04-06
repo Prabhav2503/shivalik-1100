@@ -57,7 +57,7 @@ export async function PUT(
       }
       
       // Handle image uploads
-      let imageUrls: string[] = keepExistingImages ? [...achievement.images] : [];
+      const imageUrls: string[] = keepExistingImages ? [...achievement.images] : [];
       
       // If not keeping existing images, delete them from Cloudinary
       if (!keepExistingImages && achievement.images && achievement.images.length > 0) {
@@ -132,7 +132,7 @@ export async function PUT(
         if (achievement) {
           for (const imageUrl of data.deleteImages) {
             // Remove from images array
-            achievement.images = achievement.images.filter(url => url !== imageUrl);
+            achievement.images = achievement.images.filter((url: string) => url !== imageUrl);
             
             // Delete from Cloudinary
             try {

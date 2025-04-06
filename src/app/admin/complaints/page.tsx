@@ -27,7 +27,7 @@ const AdminComplaints = () => {
     try {
       const response = await axios.get("/api/admin/complaints");
       setComplaints(response.data);
-    } catch (error) {
+    } catch {
       setError("Failed to load complaints.");
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ const AdminComplaints = () => {
       });
       
       setComplaints((prev) => prev.filter((complaint) => complaint._id !== id));
-    } catch (error) {
+    } catch {
       setError("Failed to delete complaint.");
     }
   };

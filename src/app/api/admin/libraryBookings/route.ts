@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectToDatabase from "@/libs/mongodb";
 import LibraryBooking from "@/app/models/LibraryBooking";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await connectToDatabase();
     

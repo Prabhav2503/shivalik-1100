@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // Define types for menu items
-type MealType = 'breakfast' | 'lunch' | 'dinner';
+// type MealType = 'breakfast' | 'lunch' | 'dinner';
 type DayType = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
 // Interface for the database structure
@@ -29,9 +29,9 @@ const MessMenu = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const days: DayType[] = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-  ];
+  // const days: DayType[] = [
+  //   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+  // ];
 
   useEffect(() => {
     fetchMessMenu();

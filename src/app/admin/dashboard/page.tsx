@@ -23,7 +23,7 @@ const AdminDashboard = () => {
         });
 
         setUser(response.data);
-      } catch (error) {
+      } catch {
         localStorage.removeItem("token"); // Remove invalid token
         router.push("/admin/login"); // Redirect back to login
       } finally {
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [router]);
 
   if (loading) return <p className="text-center text-white">Loading...</p>;
 

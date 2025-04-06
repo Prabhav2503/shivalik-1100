@@ -60,7 +60,7 @@ export default function ComplaintForm() {
             "Content-Type": "multipart/form-data",
           },
         });
-
+        console.log(response);
         setMessage("Complaint submitted successfully!");
       } else {
         // Without image, use JSON as before
@@ -69,7 +69,7 @@ export default function ComplaintForm() {
           title,
           description,
         });
-
+        console.log(response);
         setMessage("Complaint submitted successfully!");
       }
 

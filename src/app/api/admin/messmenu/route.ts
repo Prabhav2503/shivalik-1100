@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectToDatabase from "@/libs/mongodb";
 import MessMenu from "@/app/models/MessMenu";
-import { connect } from "http2";
+// import { connect } from "http2";
 
 export async function GET() {
   try {

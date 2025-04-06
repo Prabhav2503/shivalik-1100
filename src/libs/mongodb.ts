@@ -8,7 +8,7 @@ if (!MONGODB_URI) {
 
 // Use a global cache to prevent multiple connections in development mode
 declare global {
-  var _mongooseConnection: {
+  let s_mongooseConnection: {
     conn: typeof mongoose | null;
     promise: Promise<typeof mongoose> | null;
   };
