@@ -7,7 +7,7 @@ import cloudinary from "@/libs/cloudinary";
 // GET - Fetch a specific team member
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
@@ -28,7 +28,7 @@ export async function GET(
 // PUT - Update a team member
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const contentType = req.headers.get("content-type") || "";
@@ -138,7 +138,7 @@ export async function PUT(
 // DELETE - Remove a team member
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }>  }
 ) {
   try {
     await connectToDatabase();
