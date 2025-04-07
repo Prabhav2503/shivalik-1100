@@ -28,7 +28,7 @@ const CommonroomBooking = () => {
 
   const fetchBookedSlots = async (selectedDate: string) => {
     try {
-      const response = await axios.get(`/api/commonroomBooking?date=${selectedDate}`);
+      const response = await axios.get<Booking[]>(`/api/commonroomBooking?date=${selectedDate}`);
       setBookedSlots(response.data);
     } catch (error) {
       console.error("Error fetching booked slots:", error);
