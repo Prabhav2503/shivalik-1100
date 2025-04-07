@@ -6,7 +6,7 @@ import cloudinary from "@/libs/cloudinary";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
@@ -14,9 +14,9 @@ export async function DELETE(
     // Extract the image URL from the query parameters (if provided)
     const url = new URL(req.url);
     const imageUrl = url.searchParams.get('imageUrl') || undefined;
-    
+    const {id} = await params;
     // Delete the complaint from the database
-    const deletedComplaint = await Complains.findByIdAndDelete(params.id);
+    const deletedComplaint = await Complains.findByIdAndDelete(id);
     
     if (!deletedComplaint) {
       return NextResponse.json({ message: "Complaint not found" }, { status: 404 });
