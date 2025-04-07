@@ -43,7 +43,7 @@ export default function AdminLibraryPage() {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/admin/libraryBookings");
+      const response = await axios.get<LibraryBooking[]>("/api/admin/libraryBookings");
       setBookings(response.data);
     } catch (err) {
       console.error("Error fetching library bookings:", err);
