@@ -7,11 +7,12 @@ import cloudinary from "@/libs/cloudinary";
 // GET - Fetch a specific team member
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
-    const teamMember = await TeamMember.findById(params.id);
+    const { id } = await params;
+    const teamMember = await TeamMember.findById(id);
     
     if (!teamMember) {
       return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -27,7 +28,7 @@ export async function GET(
 // PUT - Update a team member
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const contentType = req.headers.get("content-type") || "";
@@ -50,7 +51,8 @@ export async function PUT(
       
       await connectToDatabase();
       // Find the existing team member
-      const teamMember = await TeamMember.findById(params.id); 
+      const { id } = await params;
+      const teamMember = await TeamMember.findById(id); 
       
       if (!teamMember) {
         return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -114,8 +116,9 @@ export async function PUT(
       
       await connectToDatabase();
       // Find and update the team member
+      const { id } = await params;
       const teamMember = await TeamMember.findByIdAndUpdate(
-        params.id,
+        id,
         { $set: data },
         { new: true, runValidators: true }
       );
@@ -135,12 +138,13 @@ export async function PUT(
 // DELETE - Remove a team member
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
     // Find the team member to get image URL
-    const teamMember = await TeamMember.findById(params.id);
+    const { id } = await params;
+    const teamMember = await TeamMember.findById(id);
     
     if (!teamMember) {
       return NextResponse.json({ message: "Team member not found" }, { status: 404 });
@@ -170,7 +174,7 @@ export async function DELETE(
     }
     
     // Delete the team member
-    await TeamMember.findByIdAndDelete(params.id);
+    await TeamMember.findByIdAndDelete(id);
     
     return NextResponse.json({ message: "Team member deleted successfully" });
   } catch (error) {
