@@ -14,13 +14,16 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      const response = await axios.post<{token: string}>("/api/admin/login", { username, password });
+      const response = await axios.post<{ token: string }>("/api/admin/login", {
+        username,
+        password,
+      });
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token); // Store token
         router.push("/admin/dashboard"); // Redirect to admin panel
       }
-    } catch  {
+    } catch {
       setError("Invalid username or password.");
     }
   };
@@ -53,7 +56,10 @@ const AdminLogin = () => {
             />
           </div>
 
-          <button type="submit" className="w-full bg-purple-600 text-white p-2 rounded">
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white p-2 rounded"
+          >
             Login
           </button>
         </form>

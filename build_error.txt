@@ -1,0 +1,77 @@
+﻿
+> my-project@0.1.0 build
+> next build
+
+   Γû▓ Next.js 15.1.6
+
+   Creating an optimized production build ...
+node.exe : Failed to 
+compile.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecifi    ed: 
+(Failed to com    
+pile.:String) [],     
+RemoteException
+    + FullyQualifiedEr    
+rorId : NativeComm    
+andError
+ 
+
+./src/app/admin/achievement
+s/page.tsx
+Error:   [31mx[0m 
+Unexpected token `div`. 
+Expected jsx identifier
+     ,-[[36;1;4mC:\Users\p
+rabh\OneDrive\Desktop\shiva
+lik\frontend\src\app\admin\
+achievements\page.tsx[0m:2
+14:1]
+ [2m211[0m |   };
+ [2m212[0m | 
+ [2m213[0m |   return (
+ [2m214[0m |     <div 
+className="min-h-screen 
+bg-[#050505] text-white 
+p-6 relative 
+overflow-hidden z-0">
+     : [35;1m     ^^^[0m
+ [2m215[0m |       <div 
+className="absolute top-0 
+right-0 w-96 h-96 
+bg-primary/20 rounded-full 
+blur-[100px] -z-10 
+mix-blend-screen 
+animate-blob 
+pointer-events-none"></div>
+ [2m216[0m |       <div 
+className="absolute 
+bottom-0 left-0 w-96 h-96 
+bg-accent/20 rounded-full 
+blur-[100px] -z-10 
+mix-blend-screen 
+animate-blob 
+animation-delay-2000 
+pointer-events-none"></div>
+ [2m216[0m | 
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested 
+module:
+./src/app/admin/achievement
+s/page.tsx
+
+
+> Build failed because of 
+webpack errors

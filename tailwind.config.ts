@@ -9,6 +9,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "#3b82f6",
+        accent: "#ca8a04",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
@@ -16,3 +18,4 @@ export default {
   },
   plugins: [],
 } satisfies Config;
+

@@ -1,12 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Define types for menu items
-// type MealType = 'breakfast' | 'lunch' | 'dinner';
-type DayType = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+type DayType =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
 
-// Interface for the database structure
 interface IMeal {
   breakfast: string[];
   lunch: string[];
@@ -23,15 +28,17 @@ interface IMessMenu {
   menu: IDayMenu[];
 }
 
+const MEAL_CONFIG = [
+  { key: "breakfast" as const, label: "Breakfast", icon: "☀️", color: "from-amber-500/20 to-amber-600/5" },
+  { key: "lunch" as const, label: "Lunch", icon: "🌤️", color: "from-primary/20 to-primary/5" },
+  { key: "dinner" as const, label: "Dinner", icon: "🌙", color: "from-violet-500/20 to-violet-600/5" },
+];
+
 const MessMenu = () => {
-  const [activeDay, setActiveDay] = useState<DayType>('Monday');
+  const [activeDay, setActiveDay] = useState<DayType>("Monday");
   const [menuData, setMenuData] = useState<IMessMenu | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // const days: DayType[] = [
-  //   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-  // ];
 
   useEffect(() => {
     fetchMessMenu();
@@ -41,22 +48,13 @@ const MessMenu = () => {
     try {
       setLoading(true);
       const response = await fetch("/api/messmenu");
-      
-      if (!response.ok) {
-        throw new Error("Failed to fetch mess menu");
-      }
-      
+      if (!response.ok) throw new Error("Failed to fetch mess menu");
       const data = await response.json();
       setMenuData(data);
-      
-      // Set the active day to the current day of the week or first day if not found
-      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const daysOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
       const today = daysOfWeek[new Date().getDay()] as DayType;
-      
-      // Check if today exists in the menu
       const dayExists = data.menu.some((day: IDayMenu) => day.day === today);
-      setActiveDay(dayExists ? today : data.menu[0].day as DayType);
-      
+      setActiveDay(dayExists ? today : (data.menu[0].day as DayType));
     } catch (err) {
       setError("Failed to load mess menu");
       console.error(err);
@@ -67,102 +65,109 @@ const MessMenu = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4 sm:p-6 flex items-center justify-center" style={{backgroundColor:"rgb(38,38,38)"}}>
-        <div className="text-white text-xl">Loading mess menu...</div>
+      <div className="min-h-screen bg-gradient-premium flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 spinner" />
+          <p className="text-gray-400">Loading mess menu…</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4 sm:p-6 flex items-center justify-center" style={{backgroundColor:"rgb(38,38,38)"}}>
-        <div className="text-red-500 text-xl">{error}</div>
+      <div className="min-h-screen bg-gradient-premium flex items-center justify-center">
+        <div className="glass-card p-8 text-center max-w-sm">
+          <p className="text-red-400 text-lg">{error}</p>
+        </div>
       </div>
     );
   }
 
   if (!menuData) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4 sm:p-6 flex items-center justify-center" style={{backgroundColor:"rgb(38,38,38)"}}>
-        <div className="text-white text-xl">No mess menu found.</div>
+      <div className="min-h-screen bg-gradient-premium flex items-center justify-center">
+        <p className="text-gray-400 text-xl">No mess menu found.</p>
       </div>
     );
   }
 
-  // Find the active day's menu
   const activeDayMenu = menuData.menu.find((day) => day.day === activeDay);
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 sm:p-6" style={{backgroundColor:"rgb(38,38,38)"}}>
+    <div className="min-h-screen bg-gradient-premium p-4 sm:p-6 pt-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-blue-500 my-4 sm:my-6 md:my-8">Mess Menu</h1>
-        
-        {/* Day selector - horizontally scrollable on mobile, better spacing on larger screens */}
-        <div className="overflow-x-auto pb-4 -mx-4 sm:mx-0">
-          <div className="flex min-w-max px-4 sm:px-0 sm:justify-center">
-            {menuData.menu.map((dayMenu) => (
-              <button
-                style={{backgroundColor:"rgb(64,64,64)"}}
-                key={dayMenu.day}
-                onClick={() => setActiveDay(dayMenu.day as DayType)}
-                className={`py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 mx-1 rounded-lg text-white text-sm sm:text-lg md:text-xl font-medium transition-all ${
-                  activeDay === dayMenu.day 
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg' 
-                    : 'bg-gray-800 hover:bg-gray-700'
-                }`}
-              >
-                {dayMenu.day.slice(0,3)}
-                <span className="hidden sm:inline">{dayMenu.day.slice(3)}</span>
-              </button>
-            ))}
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h1 className="section-title">Mess Menu</h1>
+          <div className="section-divider" />
+          <p className="section-subtitle">Fresh meals served daily at Shivalik</p>
+        </div>
+
+        {/* Day selector */}
+        <div className="overflow-x-auto pb-4 -mx-4 sm:mx-0 mb-8">
+          <div className="flex min-w-max px-4 sm:px-0 sm:justify-center gap-2">
+            {menuData.menu.map((dayMenu) => {
+              const isActive = activeDay === dayMenu.day;
+              return (
+                <button
+                  key={dayMenu.day}
+                  onClick={() => setActiveDay(dayMenu.day as DayType)}
+                  className={`relative py-2.5 px-5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? "text-white shadow-[0_0_16px_rgba(59,130,246,0.4)]"
+                      : "text-gray-400 hover:text-white glass"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="mess-day-tab"
+                      className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-xl -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <span>{dayMenu.day.slice(0, 3)}</span>
+                  <span className="hidden sm:inline">{dayMenu.day.slice(3)}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
-        
-        {/* Menu display - reorganized for better mobile experience */}
-        {activeDayMenu && (
-          <div className="bg-gray-800 rounded-lg shadow-xl overflow-hidden mt-4" style={{backgroundColor:"rgb(64,64,64)"}}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 p-4 sm:p-6">
-              {/* Breakfast */}
-              <div className="bg-gray-900 bg-opacity-50 rounded-lg p-4 sm:p-6" style={{backgroundColor:"rgb(23,23,23)"}}>
-                <h3 className="text-xl sm:text-2xl font-semibold text-blue-500 mb-2 sm:mb-4">Breakfast</h3>
-                <ul className="space-y-1 sm:space-y-2">
-                  {activeDayMenu.meals.breakfast.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-purple-400 mr-2">•</span>
-                      <span className="text-gray-300 text-sm sm:text-base">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+
+        {/* Menu display */}
+        <AnimatePresence mode="wait">
+          {activeDayMenu && (
+            <motion.div
+              key={activeDay}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+              className="glass-card overflow-hidden"
+            >
+              <div className="px-6 py-4 border-b border-white/10">
+                <h2 className="text-xl font-semibold text-white">{activeDay}</h2>
               </div>
-              
-              {/* Lunch */}
-              <div className="bg-gray-900 bg-opacity-50 rounded-lg p-4 sm:p-6" style={{backgroundColor:"rgb(23,23,23)"}}>
-                <h3 className="text-xl sm:text-2xl font-semibold text-blue-500 mb-2 sm:mb-4">Lunch</h3>
-                <ul className="space-y-1 sm:space-y-2">
-                  {activeDayMenu.meals.lunch.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-purple-400 mr-2">•</span>
-                      <span className="text-gray-300 text-sm sm:text-base">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-white/10">
+                {MEAL_CONFIG.map(({ key, label, icon, color }) => (
+                  <div key={key} className={`p-6 bg-gradient-to-b ${color}`}>
+                    <h3 className="text-base font-semibold text-primary mb-4 flex items-center gap-2">
+                      <span>{icon}</span> {label}
+                    </h3>
+                    <ul className="space-y-2">
+                      {(activeDayMenu.meals[key] || []).map((item, index) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-accent mt-0.5 flex-shrink-0">•</span>
+                          <span className="text-gray-300 text-sm leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
-              
-              {/* Dinner */}
-              <div className="bg-gray-900 bg-opacity-50 rounded-lg p-4 sm:p-6" style={{backgroundColor:"rgb(23,23,23)"}}>
-                <h3 className="text-xl sm:text-2xl font-semibold text-blue-500 mb-2 sm:mb-4">Dinner</h3>
-                <ul className="space-y-1 sm:space-y-2">
-                  {activeDayMenu.meals.dinner.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-purple-400 mr-2">•</span>
-                      <span className="text-gray-300 text-sm sm:text-base">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

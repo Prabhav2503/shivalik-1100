@@ -3,7 +3,11 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com" },
+      { protocol: "https", hostname: "**" },
+      { protocol: "http", hostname: "**" },
+    ],
   },
   eslint: {
     ignoreDuringBuilds: isProd, // ✅ disables ESLint in production builds

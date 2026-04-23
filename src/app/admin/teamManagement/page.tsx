@@ -78,8 +78,8 @@ export default function AdminTeamPage() {
     setError("");
     setSuccess("");
     // Reset file input
-    const fileInput = document.getElementById('image') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    const fileInput = document.getElementById("image") as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -141,9 +141,9 @@ export default function AdminTeamPage() {
     setError("");
 
     // Scroll to form
-    const formElement = document.getElementById('teamForm');
+    const formElement = document.getElementById("teamForm");
     if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
+      formElement.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -154,9 +154,9 @@ export default function AdminTeamPage() {
 
     try {
       await axios.delete(`/api/team/${id}`);
-      setTeamMembers(prev => prev.filter(member => member._id !== id));
+      setTeamMembers((prev) => prev.filter((member) => member._id !== id));
       setSuccess("Team member deleted successfully!");
-      
+
       // If we were editing this member, reset the form
       if (editId === id) {
         resetForm();
@@ -177,12 +177,20 @@ export default function AdminTeamPage() {
           {isEditing ? "Edit Team Member" : "Add New Team Member"}
         </h2>
 
-        {error && <div className="bg-red-500 text-white p-3 rounded mb-4">{error}</div>}
-        {success && <div className="bg-green-500 text-white p-3 rounded mb-4">{success}</div>}
+        {error && (
+          <div className="bg-red-500 text-white p-3 rounded mb-4">{error}</div>
+        )}
+        {success && (
+          <div className="bg-green-500 text-white p-3 rounded mb-4">
+            {success}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-1">Name</label>
+            <label htmlFor="name" className="block text-sm font-medium mb-1">
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -194,7 +202,9 @@ export default function AdminTeamPage() {
           </div>
 
           <div>
-            <label htmlFor="role" className="block text-sm font-medium mb-1">Role</label>
+            <label htmlFor="role" className="block text-sm font-medium mb-1">
+              Role
+            </label>
             <input
               type="text"
               id="role"
@@ -206,7 +216,9 @@ export default function AdminTeamPage() {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -218,7 +230,9 @@ export default function AdminTeamPage() {
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone</label>
+            <label htmlFor="phone" className="block text-sm font-medium mb-1">
+              Phone
+            </label>
             <input
               type="text"
               id="phone"
@@ -230,7 +244,9 @@ export default function AdminTeamPage() {
           </div>
 
           <div>
-            <label htmlFor="order" className="block text-sm font-medium mb-1">Display Order</label>
+            <label htmlFor="order" className="block text-sm font-medium mb-1">
+              Display Order
+            </label>
             <input
               type="number"
               id="order"
@@ -238,11 +254,15 @@ export default function AdminTeamPage() {
               onChange={(e) => setOrder(parseInt(e.target.value) || 0)}
               className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white"
             />
-            <p className="text-xs text-gray-400 mt-1">Lower numbers appear first</p>
+            <p className="text-xs text-gray-400 mt-1">
+              Lower numbers appear first
+            </p>
           </div>
 
           <div>
-            <label htmlFor="image" className="block text-sm font-medium mb-1">Profile Image</label>
+            <label htmlFor="image" className="block text-sm font-medium mb-1">
+              Profile Image
+            </label>
             <input
               type="file"
               id="image"
@@ -251,7 +271,9 @@ export default function AdminTeamPage() {
               className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white"
             />
             <p className="text-xs text-gray-400 mt-1">
-              {isEditing && !imageFile ? "Leave empty to keep current image" : "Optional - initials will be used if no image is provided"}
+              {isEditing && !imageFile
+                ? "Leave empty to keep current image"
+                : "Optional - initials will be used if no image is provided"}
             </p>
           </div>
 
@@ -275,13 +297,13 @@ export default function AdminTeamPage() {
               disabled={isSubmitting}
               className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded disabled:bg-purple-800 disabled:cursor-not-allowed"
             >
-              {isSubmitting 
+              {isSubmitting
                 ? "Saving..."
-                : isEditing 
-                  ? "Update Member" 
+                : isEditing
+                  ? "Update Member"
                   : "Add Member"}
             </button>
-            
+
             {isEditing && (
               <button
                 type="button"
@@ -297,7 +319,7 @@ export default function AdminTeamPage() {
 
       {/* Team Members List */}
       <h2 className="text-xl font-semibold mb-4">Team Members</h2>
-      
+
       {loading ? (
         <div className="flex justify-center items-center py-10">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
@@ -309,19 +331,35 @@ export default function AdminTeamPage() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-800">
-                <th className="border border-gray-600 px-4 py-2 text-left">Order</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Image</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Name</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Role</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Email</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Phone</th>
-                <th className="border border-gray-600 px-4 py-2 text-left">Actions</th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Order
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Image
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Name
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Role
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Email
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Phone
+                </th>
+                <th className="border border-gray-600 px-4 py-2 text-left">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {teamMembers.map((member) => (
                 <tr key={member._id} className="border-t border-gray-600">
-                  <td className="border border-gray-600 px-4 py-2">{member.order || 0}</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {member.order || 0}
+                  </td>
                   <td className="border border-gray-600 px-4 py-2">
                     {member.imageUrl ? (
                       <div className="relative h-12 w-12 rounded-full overflow-hidden">
@@ -334,14 +372,26 @@ export default function AdminTeamPage() {
                       </div>
                     ) : (
                       <div className="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
-                        {member.name.split(' ').map(part => part[0]).join('').toUpperCase()}
+                        {member.name
+                          .split(" ")
+                          .map((part) => part[0])
+                          .join("")
+                          .toUpperCase()}
                       </div>
                     )}
                   </td>
-                  <td className="border border-gray-600 px-4 py-2">{member.name}</td>
-                  <td className="border border-gray-600 px-4 py-2">{member.role}</td>
-                  <td className="border border-gray-600 px-4 py-2">{member.email}</td>
-                  <td className="border border-gray-600 px-4 py-2">{member.phone}</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {member.name}
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {member.role}
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {member.email}
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {member.phone}
+                  </td>
                   <td className="border border-gray-600 px-4 py-2">
                     <div className="flex space-x-2">
                       <button

@@ -37,8 +37,8 @@ export default function ComplaintForm() {
     setImageFile(null);
     setImagePreview(null);
     // Reset the file input
-    const fileInput = document.getElementById('image') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    const fileInput = document.getElementById("image") as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -79,10 +79,10 @@ export default function ComplaintForm() {
       setDescription("");
       setImageFile(null);
       setImagePreview(null);
-      
+
       // Reset the file input
-      const fileInput = document.getElementById('image') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      const fileInput = document.getElementById("image") as HTMLInputElement;
+      if (fileInput) fileInput.value = "";
     } catch (error) {
       console.error("Error submitting complaint:", error);
       setMessage("Error submitting complaint.");
@@ -93,74 +93,106 @@ export default function ComplaintForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen w-full px-4 py-8" style={{backgroundColor:"rgb(23,23,23)"}}>
+      <div
+        className="flex flex-col items-center min-h-screen w-full px-4 py-8"
+        style={{ backgroundColor: "rgb(23,23,23)" }}
+      >
         <Head>
           <title>Submit a Complaint</title>
         </Head>
 
         <div className="w-full max-w-lg">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">Submit a Complaint</h1>
-          <p className="text-center text-gray-400 mb-8 text-base md:text-lg">Report issues for quick resolution</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">
+            Submit a Complaint
+          </h1>
+          <p className="text-center text-gray-400 mb-8 text-base md:text-lg">
+            Report issues for quick resolution
+          </p>
 
-          {message && <p className="text-center text-green-500 mb-4 text-base md:text-lg">{message}</p>}
+          {message && (
+            <p className="text-center text-green-500 mb-4 text-base md:text-lg">
+              {message}
+            </p>
+          )}
 
-          <form onSubmit={handleSubmit} className="p-6 rounded-lg" style={{backgroundColor:"rgb(38,38,38)"}}>
+          <form
+            onSubmit={handleSubmit}
+            className="p-6 rounded-lg"
+            style={{ backgroundColor: "rgb(38,38,38)" }}
+          >
             <div className="mb-4">
-              <label className="block text-white text-base md:text-lg mb-3">Complaint Type</label>
+              <label className="block text-white text-base md:text-lg mb-3">
+                Complaint Type
+              </label>
               <div className="flex space-x-4">
                 <label className="flex items-center cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="complaintType" 
-                    value="Mess" 
+                  <input
+                    type="radio"
+                    name="complaintType"
+                    value="Mess"
                     checked={complaintType === "Mess"}
-                    onChange={() => setComplaintType("Mess")} 
-                    className="mr-2 w-5 h-5" 
+                    onChange={() => setComplaintType("Mess")}
+                    className="mr-2 w-5 h-5"
                   />
                   <span className="text-white text-base md:text-lg">Mess</span>
                 </label>
                 <label className="flex items-center cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="complaintType" 
-                    value="Maintanence" 
+                  <input
+                    type="radio"
+                    name="complaintType"
+                    value="Maintanence"
                     checked={complaintType === "Maintanence"}
-                    onChange={() => setComplaintType("Maintanence")} 
+                    onChange={() => setComplaintType("Maintanence")}
                     className="mr-2 w-5 h-5"
                   />
-                  <span className="text-white text-base md:text-lg">Maintanence</span>
+                  <span className="text-white text-base md:text-lg">
+                    Maintanence
+                  </span>
                 </label>
               </div>
             </div>
 
             <div className="mb-4">
-              <label htmlFor="title" className="block text-white text-base md:text-lg mb-3">Title</label>
-              <input 
-                type="text" 
-                id="title" 
-                value={title} 
-                onChange={(e) => setTitle(e.target.value)} 
-                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg" 
-                style={{backgroundColor:"rgb(64,64,64)"}}
-                required 
+              <label
+                htmlFor="title"
+                className="block text-white text-base md:text-lg mb-3"
+              >
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full px-3 py-3 rounded text-white border-0 text-base md:text-lg"
+                style={{ backgroundColor: "rgb(64,64,64)" }}
+                required
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="description" className="block text-white text-base md:text-lg mb-3">Description</label>
-              <textarea 
-                id="description" 
-                value={description} 
-                onChange={(e) => setDescription(e.target.value)} 
-                className="w-full px-3 py-3 rounded bg-gray-700 text-white border-0 h-24 text-base md:text-lg" 
-                style={{backgroundColor:"rgb(64,64,64)"}}
+              <label
+                htmlFor="description"
+                className="block text-white text-base md:text-lg mb-3"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full px-3 py-3 rounded bg-gray-700 text-white border-0 h-24 text-base md:text-lg"
+                style={{ backgroundColor: "rgb(64,64,64)" }}
                 required
               ></textarea>
             </div>
 
             {/* Image upload section */}
             <div className="mb-4">
-              <label htmlFor="image" className="block text-white text-base md:text-lg mb-3">
+              <label
+                htmlFor="image"
+                className="block text-white text-base md:text-lg mb-3"
+              >
                 Add Image (Optional)
               </label>
               <input
@@ -169,9 +201,9 @@ export default function ComplaintForm() {
                 accept="image/*"
                 onChange={handleImageChange}
                 className="w-full px-3 py-3 rounded  text-white border-0 text-base md:text-lg"
-                style={{backgroundColor:"rgb(64,64,64)"}}
+                style={{ backgroundColor: "rgb(64,64,64)" }}
               />
-              
+
               {/* Image preview */}
               {imagePreview && (
                 <div className="mt-3 relative">
@@ -195,9 +227,9 @@ export default function ComplaintForm() {
               )}
             </div>
 
-            <button 
-              type="submit" 
-              className="w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500 text-base md:text-lg" 
+            <button
+              type="submit"
+              className="w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700 transition-colors disabled:bg-gray-500 text-base md:text-lg"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit Complaint"}

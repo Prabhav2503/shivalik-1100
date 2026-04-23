@@ -35,14 +35,15 @@ const AdminComplaints = () => {
   };
 
   const handleDelete = async (id: string, imageUrl?: string) => {
-    if (!window.confirm("Are you sure you want to delete this complaint?")) return;
+    if (!window.confirm("Are you sure you want to delete this complaint?"))
+      return;
 
     try {
       // Delete the complaint and its image if it exists
       await axios.delete(`/api/admin/complaints/${id}`, {
-        params: { imageUrl } // Send imageUrl as a query parameter instead of in the request body
+        params: { imageUrl }, // Send imageUrl as a query parameter instead of in the request body
       });
-      
+
       setComplaints((prev) => prev.filter((complaint) => complaint._id !== id));
     } catch {
       setError("Failed to delete complaint.");
@@ -59,7 +60,8 @@ const AdminComplaints = () => {
     setExpandedImage(null);
   };
 
-  if (loading) return <p className="text-center text-white">Loading complaints...</p>;
+  if (loading)
+    return <p className="text-center text-white">Loading complaints...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
@@ -75,7 +77,9 @@ const AdminComplaints = () => {
               <tr className="bg-gray-800">
                 <th className="border border-gray-600 px-4 py-2">Type</th>
                 <th className="border border-gray-600 px-4 py-2">Title</th>
-                <th className="border border-gray-600 px-4 py-2">Description</th>
+                <th className="border border-gray-600 px-4 py-2">
+                  Description
+                </th>
                 <th className="border border-gray-600 px-4 py-2">Image</th>
                 <th className="border border-gray-600 px-4 py-2">Created At</th>
                 <th className="border border-gray-600 px-4 py-2">Actions</th>
@@ -84,9 +88,15 @@ const AdminComplaints = () => {
             <tbody>
               {complaints.map((complaint) => (
                 <tr key={complaint._id} className="border border-gray-600">
-                  <td className="border border-gray-600 px-4 py-2">{complaint.complainType}</td>
-                  <td className="border border-gray-600 px-4 py-2">{complaint.title}</td>
-                  <td className="border border-gray-600 px-4 py-2">{complaint.description}</td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {complaint.complainType}
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {complaint.title}
+                  </td>
+                  <td className="border border-gray-600 px-4 py-2">
+                    {complaint.description}
+                  </td>
                   <td className="border border-gray-600 px-4 py-2 text-center">
                     {complaint.imageUrl ? (
                       <div className="relative h-20 w-20 mx-auto cursor-pointer">
@@ -107,7 +117,9 @@ const AdminComplaints = () => {
                   </td>
                   <td className="border border-gray-600 px-4 py-2">
                     <button
-                      onClick={() => handleDelete(complaint._id, complaint.imageUrl)}
+                      onClick={() =>
+                        handleDelete(complaint._id, complaint.imageUrl)
+                      }
                       className="bg-red-500 px-3 py-1 rounded hover:bg-red-700"
                     >
                       Delete
@@ -122,7 +134,7 @@ const AdminComplaints = () => {
 
       {/* Expanded image modal */}
       {expandedImage && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
           onClick={closeExpandedImage}
         >
