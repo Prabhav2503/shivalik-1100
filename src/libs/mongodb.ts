@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI is not defined in environment variables.");
-}
-
 // Define the connection type
 interface MongooseConnection {
   conn: mongoose.Connection | null;
@@ -26,6 +22,10 @@ if (!globalWithMongoose._mongooseConnection) {
  * Connect to MongoDB database
  */
 async function connectToDatabase(): Promise<typeof mongoose> {
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables.");
+  }
+
   // If we have an existing connection, use it
   if (globalWithMongoose._mongooseConnection?.conn) {
     return mongoose;

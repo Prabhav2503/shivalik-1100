@@ -1,5 +1,5 @@
 import connectToDatabase from "@/libs/mongodb";
-import MessMenu from "@/models/MessMenu";
+import MessMenu from "@/app/models/MessMenu";
 import XLSX from "xlsx";
 
 async function updateMessMenuFromExcel(filePath: string) {
